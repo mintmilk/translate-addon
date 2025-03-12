@@ -1,0 +1,58 @@
+/* 翻译容器样式 */
+.translation-wrapper {
+    margin-top: 0.2em;
+    margin-bottom: 0.5em;
+    line-height: 1.4;
+    opacity: 0.95;
+    transition: opacity 0.2s ease;
+  }
+  
+  /* 翻译文本样式 */
+  .translation-text {
+    border-left: 2px solid #4285f4;
+    padding-left: 8px;
+    color: #444;
+    font-style: normal;
+    font-weight: normal;
+  }
+  
+  /* 鼠标悬停时增强显示 */
+  .translation-wrapper:hover {
+    opacity: 1;
+  }
+  
+  /* 适应暗色模式 */
+  @media (prefers-color-scheme: dark) {
+    .translation-text {
+      color: #b8b8b8;
+      border-left-color: #8ab4f8;
+    }
+  }
+  
+  /* 提高Z-index确保翻译内容不被遮挡 */
+  .translation-wrapper {
+    position: relative;
+    z-index: 2;
+  }
+  
+  /* 针对特定内容类型的样式调整 */
+  p > .translation-wrapper {
+    margin-top: 0.1em;
+  }
+  
+  h1 > .translation-wrapper,
+  h2 > .translation-wrapper,
+  h3 > .translation-wrapper,
+  h4 > .translation-wrapper,
+  h5 > .translation-wrapper,
+  h6 > .translation-wrapper {
+    font-size: 0.85em;
+    margin-top: 0.2em;
+    opacity: 0.85;
+  }
+  
+  /* 防止翻译文本被选择导致的页面内容紊乱 */
+  .translation-text::selection {
+    background-color: rgba(66, 133, 244, 0.2);
+  }
+  

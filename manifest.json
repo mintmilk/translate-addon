@@ -1,0 +1,31 @@
+{
+    "manifest_version": 3,
+    "name": "AI Translation Assistant",
+    "version": "0.1",
+    "description": "使用AI进行高质量英文到中文翻译，保留原文",
+    "permissions": ["activeTab", "storage", "scripting"],
+    "background": {
+      "service_worker": "background.js",
+      "persistent": false
+    },
+    "content_scripts": [{
+      "matches": ["<all_urls>"],
+      "js": ["content-script.js"],
+      "css": ["styles.css"],
+      "run_at": "document_end"
+    }],
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+      }
+    },
+    "icons": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  }
+  
