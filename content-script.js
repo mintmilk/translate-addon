@@ -6,7 +6,7 @@ const CONFIG = {
     excludeTags: ['SCRIPT', 'STYLE', 'CODE', 'PRE', 'TEXTAREA', 'INPUT', 'NOSCRIPT', 'SVG'],
     observerThreshold: 0.1, // 元素有10%进入视口就触发
     observerRootMargin: '300px', // 视口外300px预加载区域
-    selectors: 'p, h1, h2, h3, h4, h5, h6, div > span:not(.translation-text), li:not(:has(> ul, > ol))'
+    selectors: 'p, h1, h2, h3, h4, h5, h6, div, li:not(:has(> ul, > ol))'
 };
 
 // 存储已处理节点的集合
@@ -250,19 +250,42 @@ async function sendTranslationRequest(texts) {
         );
     });
 }
-
 // 插入翻译
 function insertTranslation(node, translatedText) {
     if (!node || !node.parentNode || processedNodes.has(node)) return;
 
-    const translationElement = document.createElement('div');
+    // 创建翻译文本的容器，使用与原文相同的标签以保持结构一致性
+    const translationElement = document.createElement(node.tagName || 'div');
     translationElement.className = 'translation-wrapper';
     translationElement.textContent = translatedText;
 
+    // 获取原文节点的计算样式
+    const computedStyle = window.getComputedStyle(node);
+
+    // 定义需要复制的样式属性
+    const stylesToCopy = [
+        'font-family',   // 字体
+        'font-size',     // 字号
+        'font-weight',   // 字体粗细
+        'font-style',    // 字体样式（如斜体）
+        'color',         // 文字颜色
+        'line-height',   // 行高
+        'text-align',    // 文本对齐方式
+        'margin',        // 外边距
+        'padding'        // 内边距
+    ];
+
+    // 将原文节点的样式应用到翻译文本容器
+    stylesToCopy.forEach(style => {
+        translationElement.style[style] = computedStyle.getPropertyValue(style);
+    });
+
+    // 设置唯一的ID
     const uniqueId = `trans-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     translationElement.dataset.translationId = uniqueId;
     processedNodes.add(translationElement);
 
+    // 插入到原文节点后面
     if (node.nextSibling) {
         node.parentNode.insertBefore(translationElement, node.nextSibling);
     } else {
