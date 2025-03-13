@@ -6,7 +6,7 @@ const CONFIG = {
     excludeTags: ['SCRIPT', 'STYLE', 'CODE', 'PRE', 'TEXTAREA', 'INPUT', 'NOSCRIPT', 'SVG'],
     observerThreshold: 0.1, // 元素有10%进入视口就触发
     observerRootMargin: '300px', // 视口外300px预加载区域
-    selectors: 'p, h1, h2, h3, h4, h5, h6, div, li:not(:has(> ul, > ol))'
+    selectors: 'p, h1, h2, h3, h4, h5, h6, div > span:not(.translation-text), li:not(:has(> ul, > ol))'
 };
 
 // 存储已处理节点的集合
